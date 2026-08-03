@@ -30,9 +30,4 @@ jobs:
         run: terraform init
 
       - name: Terraform Destroy
-      run: |
-        if [ -z "${{ github.event.inputs.target }}" ]; then
-            terraform destroy -auto-approve
-        else
-        terraform destroy -target=${{ github.event.inputs.target }} -auto-approve
-        fi
+        run: terraform destroy -auto-approve
