@@ -1,0 +1,48 @@
+
+name: Terraform AWS Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.15.8"
+
+
+    - name: Verify Terraform Installation
+      run: |
+        terraform version
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-2
+
+    - name: Verify AWS Identity
+      run: |
+        aws sts get-caller-identity
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+       
+      run: terraform plan
+
+    - name: Terraform Apply
+      
+      run: terraform apply -auto-approve
