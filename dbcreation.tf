@@ -28,11 +28,11 @@ resource "aws_secretsmanager_secret_version" "db_password" {
   })
   secret_string_wo_version = 1
 }
-
+/*
 resource "aws_secretsmanager_secret_version" "db_password" {
   secret_id = aws_secretsmanager_secret_version.db_password.secret_id
 }
-
+*/
 output "rds_endpoint" {
   value = aws_db_instance.mysql.endpoint
 }
